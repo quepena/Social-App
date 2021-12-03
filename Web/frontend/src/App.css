@@ -1,0 +1,20 @@
+.chatMessageOwn {
+    width: 80%;
+    right: 0 auto;
+    color: orange;
+}
+
+.chatMessage {
+    color: violet;
+}
+
+.chatBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chatBox {
+    height: 700px;
+    overflow-y: scroll;
+}
