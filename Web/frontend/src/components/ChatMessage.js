@@ -6,6 +6,7 @@ const ChatMessage = ({ chatMessage, own }) => {
     return (
         <Card className={own ? "chatMessageOwn" : "chatMessage"} key={chatMessage._id}>
             <Card.Body>
+                <div>{chatMessage.sender}</div>
                 <Card.Title>{chatMessage.contents}</Card.Title>
                 <Card.Footer>{format(chatMessage.date)}</Card.Footer>
             </Card.Body>

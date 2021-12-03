@@ -10,6 +10,8 @@ import axios from 'axios';
 import ChatMessage from '../components/ChatMessage';
 import { io } from 'socket.io-client'
 import Conversation from '../components/Conversation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const MessageScreen = ({ history }) => {
     const dispatch = useDispatch();
@@ -103,7 +105,9 @@ const MessageScreen = ({ history }) => {
 
     useEffect(() => {
         if (userInfo) {
-            scrollRef.current?.scrollIntoView({ behavior: "auto" })
+            if (scrollRef.current) {
+                scrollRef.current.scrollIntoView({ behavior: "auto" })
+            }
         } else {
             history.push('/login');
         }
@@ -133,38 +137,49 @@ const MessageScreen = ({ history }) => {
 
     return (
         <>
-            <Container>
-                <Card>
-                    <Card.Body>
-                        <Row>
-                            <Col md={4}>
-                                {
-                                    conversations.map((c) => (
-                                        <div onClick={() => {
-                                            setCurrentConversation(c);
-                                        }}><Conversation conversation={c} />
-                                        </div>
-                                    ))
-                                }
-
-                            </Col>
-                            <Col className="chatBox">
-                                <Col md={8} className="chatBoxWrapper">
+            {userInfo ? (
+                <Container>
+                    <Card>
+                        <Card.Body>
+                            <Row>
+                                <Col md={4} style={{ border: "solid lightgray 2px", borderRadius: "1%", margin: "1%" }}>
                                     {
-                                        messages.map((message) => (
-                                            <div ref={scrollRef}>
-                                                <ChatMessage chatMessage={message} own={message.sender === userInfo._id} />
+                                        conversations.map((c) => (
+                                            <div onClick={() => {
+                                                setCurrentConversation(c);
+                                            }}><Conversation conversation={c} />
                                             </div>
                                         ))
                                     }
-                                    <Form.Control onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="mx-2" as="textarea" style={{ borderLeft: 'none' }} placeholder="Write a message here" />
-                                        <Button onClick={submitHandler} type="submit" variant="primary">Send</Button>
+
                                 </Col>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
-            </Container>
+                                <Col className="chatBox">
+                                    {currentConversation ? (
+                                        <Col md={8} className="chatBoxWrapper">
+                                            {
+                                                messages.map((message) => (
+                                                    <div ref={scrollRef}>
+                                                        <ChatMessage chatMessage={message} own={message.sender === userInfo._id} />
+                                                    </div>
+                                                ))
+                                            }
+
+                                            <Col style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "115%", width: "140%" }}>
+                                                <Form.Control onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="mx-2" as="textarea" placeholder="Write a message here" />
+                                                <Button onClick={submitHandler} type="submit" variant="primary"><FontAwesomeIcon className="mx-2" icon={faPaperPlane}></FontAwesomeIcon></Button>
+                                            </Col>
+                                        </Col>
+                                    ) : (
+                                        <p style={{ size: "40px", verticalAlign: "center" }}>Choose a conversation to chat!</p>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                    </Card>
+                </Container>
+            ) : (
+                <div></div>
+            )}
         </>
     )
 }

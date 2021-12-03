@@ -6,22 +6,7 @@ import ChatMessage from '../components/ChatMessage';
 import { io } from 'socket.io-client'
 
 const Conversation = ({ conversation }) => {
-    const dispatch = useDispatch();
-
-    const [conversations, setConversations] = useState([]);
-
-    const [currentConversation, setCurrentConversation] = useState(null);
-
-    const [messages, setMessages] = useState([]);
-
-    const [newMessage, setNewMessage] = useState('');
-    const [arrivedMessage, setArrivedMessage] = useState(null);
-
     const [friend, setFriend] = useState([]);
-
-    const socket = useRef();
-
-    const scrollRef = useRef();
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
@@ -44,7 +29,7 @@ const Conversation = ({ conversation }) => {
     }, [userInfo, conversation])
 
     return (
-        <Card>
+        <Card style={{margin: "2% 0 2% 0"}}>
             <Card.Body>
                 <Card.Title>{friend.username}</Card.Title>
             </Card.Body>
