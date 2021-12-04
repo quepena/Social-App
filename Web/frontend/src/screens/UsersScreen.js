@@ -58,7 +58,7 @@ const UsersScreen = ({ match, history }) => {
                         userInfo && user._id === userInfo._id ? ((<div>
                         </div>)) :
                             (
-                                <LinkContainer to={`/${user._id}`} key={user._id} style={{ width: '40vh', margin: '5vh' }}>
+                                <LinkContainer to={`users/${user._id}`} key={user._id} style={{ width: '40vh', margin: '5vh' }}>
                                     <Card>
                                         <Card.Body>
                                             <Card.Title><FontAwesomeIcon className="mx-2" icon={faUser}></FontAwesomeIcon><strong>{user.username}</strong></Card.Title>

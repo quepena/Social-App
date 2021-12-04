@@ -7,9 +7,7 @@ import {
     registerUser, 
     getCurrentUserProfile, 
     updateCurrentUserProfile, 
-    deleteCurrentUserAccount, 
-    followUser,
-    unfollowUser 
+    deleteCurrentUserAccount,
 } from '../controllers/userController.js';
 
 import { protect } from '../middleware/authMiddleware.js';
@@ -22,9 +20,9 @@ router.route('/users/profile').get(protect, getCurrentUserProfile).put(protect, 
 
 router.route('/users/:id').get(getUserProfile).delete(protect, deleteCurrentUserAccount);
 
-router.route('/users/:id/follow').put(followUser);
+// router.route('/users/:id/follow').put(followUser);
 
-router.route('/users/:id/unfollow').put(unfollowUser);
+// router.route('/users/:id/unfollow').put(unfollowUser);
 
 router.route('/login').post(authUser);
 

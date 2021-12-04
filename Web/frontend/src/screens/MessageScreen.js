@@ -142,7 +142,7 @@ const MessageScreen = ({ history }) => {
                     <Card>
                         <Card.Body>
                             <Row>
-                                <Col md={4} style={{ border: "solid lightgray 2px", borderRadius: "1%", margin: "1%" }}>
+                                <Col md={4} style={{ border: "solid #158cba 3px", borderRadius: "2%", margin: "1%" }}>
                                     {
                                         conversations.map((c) => (
                                             <div onClick={() => {
@@ -153,26 +153,33 @@ const MessageScreen = ({ history }) => {
                                     }
 
                                 </Col>
-                                <Col className="chatBox">
+                                <Col>
                                     {currentConversation ? (
-                                        <Col md={8} className="chatBoxWrapper">
-                                            {
-                                                messages.map((message) => (
-                                                    <div ref={scrollRef}>
-                                                        <ChatMessage chatMessage={message} own={message.sender === userInfo._id} />
-                                                    </div>
-                                                ))
-                                            }
+                                        <Col>
+                                            <Col className="chatBox">
 
-                                            <Col style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "115%", width: "140%" }}>
+                                                <Col md={8} className="chatBoxWrapper">
+                                                    {
+                                                        messages.map((message) => (
+                                                            <div ref={scrollRef}>
+                                                                <ChatMessage chatMessage={message} own={message.sender === userInfo._id} conversation={currentConversation} />
+                                                            </div>
+                                                        ))
+                                                    }
+
+                                                </Col>
+
+                                            </Col>
+                                            <Col style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
                                                 <Form.Control onChange={(e) => setNewMessage(e.target.value)} value={newMessage} className="mx-2" as="textarea" placeholder="Write a message here" />
                                                 <Button onClick={submitHandler} type="submit" variant="primary"><FontAwesomeIcon className="mx-2" icon={faPaperPlane}></FontAwesomeIcon></Button>
                                             </Col>
                                         </Col>
                                     ) : (
-                                        <p style={{ size: "40px", verticalAlign: "center" }}>Choose a conversation to chat!</p>
+                                        <p style={{ fontSize: "25px" }}>Choose a conversation to chat!</p>
                                     )}
                                 </Col>
+
                             </Row>
                         </Card.Body>
                     </Card>

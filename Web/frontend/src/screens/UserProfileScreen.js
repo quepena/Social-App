@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Card, Col, Button } from 'react-bootstrap';
+import { Container, Row, Card, Col, Button, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { LinkContainer } from 'react-router-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faPaperPlane, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 
 const UserProfileScreen = ({ match, history }) => {
     const [user, setUser] = useState({});
@@ -13,6 +15,15 @@ const UserProfileScreen = ({ match, history }) => {
     const dispatch = useDispatch();
 
     const [conversations, setConversations] = useState([]);
+
+    const [age, setAge] = useState([]);
+
+    // const [followed, setFollowed] = useState(false);
+    const [posts, setPosts] = useState([]);
+
+    const [title, setTitle] = useState('');
+
+    const [contents, setContents] = useState('');
 
     useEffect(() => {
         if (userInfo) {
@@ -27,6 +38,16 @@ const UserProfileScreen = ({ match, history }) => {
                 setConversations(data)
             }
             fetchConversations(userInfo._id);
+
+            const calculateAge = async (dateOfBirth) => {
+                var Bdate = dateOfBirth;
+                var Bday = +new Date(Bdate);
+                var calculatedAge = ((Date.now() - Bday) / (31557600000));
+                setAge(calculatedAge)
+                console.log(age);
+                console.log(calculatedAge);
+            }
+            calculateAge(userInfo.dateOfBirth)
         } else {
             history.push('/login');
         }
@@ -41,17 +62,39 @@ const UserProfileScreen = ({ match, history }) => {
                     setUser(res.data);
                 }
                 fetchUser();
+                const fetchPosts = async () => {
+                    const { data } = await axios.get(`/api/blogs/${match.params.id}`)
+                    setPosts(data)
+                    console.log(data);
+                }
+                fetchPosts();
             } else {
                 const fetchUser = async () => {
                     const res = await axios.get(`/api/users/users/${userInfo._id}`);
                     setUser(res.data);
                 }
                 fetchUser();
+                const fetchPosts = async () => {
+                    const { data } = await axios.get(`/api/blogs/${userInfo._id}`)
+                    setPosts(data)
+                    console.log(data);
+                }
+                fetchPosts();
             }
         } else {
             history.push('/login');
         }
     }, [history, userInfo])
+
+    // useEffect(() => {
+    //     setFollowed(userInfo.followings.includes(user?.id));
+    // }, [userInfo, user.id, followed])
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userInfo.token}`
+        }
+    }
 
     const submitHandler = async (e) => {
         if (userInfo) {
@@ -77,7 +120,7 @@ const UserProfileScreen = ({ match, history }) => {
                 flag = true
             }
             console.log(flag);
-            
+
             if (flag === true) {
                 const conversation = {
                     sender: userInfo._id,
@@ -91,21 +134,101 @@ const UserProfileScreen = ({ match, history }) => {
         }
     }
 
+    // const followHandler = async (e) => {
+    //     if (userInfo) {
+    //         const config = {
+    //             headers: {
+    //                 Authorization: `Bearer ${userInfo.token}`
+    //             }
+    //         }
+
+    //         if(followed) {
+    //             await axios.put("/api/users/users/"+user._id+"/unfollow", {userId: userInfo._id});
+    //         } else {
+    //             await axios.put("/api/users/users/"+user._id+"/follow", {userId: userInfo._id});
+    //         }
+
+    //         setFollowed(!followed);
+    //     } else {
+    //         history.push('/login');
+    //     }
+    // }
+
+    const postHandler = async (e) => {
+        e.preventDefault();
+        const post = {
+            title: title,
+            contents: contents,
+            userId: userInfo._id,
+        }
+
+        const res = await axios.post(`/api/blogs`, post, config)
+        setPosts([...posts])
+        window.location.reload()
+    }
+
     return (
-        <Container>
-            <Row style={{ display: 'flex', juctifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+        <Container style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <Row style={{ marginTop: "5vh", width: "70vh" }}>
                 {
                     userInfo && userInfo._id !== user._id ?
-                        (<Card>
-                            <Card.Title>{user.username}</Card.Title>
-                            <LinkContainer to="/messages" style={{ width: '20%' }}><Button onClick={submitHandler} type="submit" variant="primary">Send</Button></LinkContainer>
-                        </Card>) :
-                        (<Card>
-                            <Card.Title>{user.username}</Card.Title>
-                        </Card>)
+                        (<Row>
+                            <Card style={{ display: 'flex', juctifyContent: 'left', alignItems: 'center', padding: "10vh" }}>
+                                <Card.Title><FontAwesomeIcon className="mx-2" icon={faUser}></FontAwesomeIcon><strong>{user.username}</strong></Card.Title>
+                                <Card.Text>{user.knownAs + ", " + Math.floor(age) + ", " + user.gender}</Card.Text>
+                                <Card.Text>{user.city + ", " + user.country}</Card.Text>
+                                <Card.Text>{user.introduction}</Card.Text>
+                                {/* <Button onClick={followHandler} style={{ width: '80%', marginTop: "2vh" }} type="submit" variant="primary"><FontAwesomeIcon className="mx-2" icon={faUserFriends}></FontAwesomeIcon>{followed ? "Unfollow" : "Follow"}</Button> */}
+                                <LinkContainer to="/messages" style={{ width: '80%', marginTop: "2vh" }}><Button onClick={submitHandler} type="submit" variant="primary"><FontAwesomeIcon className="mx-2" icon={faPaperPlane}></FontAwesomeIcon>Send a message</Button></LinkContainer>
+                            </Card>
+                            <Card.Body style={{ display: 'flex', juctifyContent: 'right', alignItems: 'center', padding: "10vh" }}>
+                                {
+                                    posts.map((post) => (
+                                        <Card key={post._id}>
+                                            <Card.Body>
+                                                <LinkContainer to={`/blogs/${userInfo._id}`}></LinkContainer>
+                                                <Card.Title>{post.title}</Card.Title>
+                                                <Card.Text>{post.contents}</Card.Text>
+                                                <Button>Comment</Button>
+                                            </Card.Body>
+                                        </Card>
+                                    ))
+                                }
+                            </Card.Body></Row>) :
+                        (<Row>
+                            <Card style={{ display: 'flex', juctifyContent: 'left', alignItems: 'center', padding: "10vh" }}>
+                                <Card.Title><FontAwesomeIcon className="mx-2" icon={faUser}></FontAwesomeIcon><strong>{userInfo.username}</strong></Card.Title>
+                                <Card.Text>{userInfo.knownAs + ", " + Math.floor(age) + ", " + userInfo.gender}</Card.Text>
+                                <Card.Text>{userInfo.city + ", " + userInfo.country}</Card.Text>
+                                <Card.Text>{userInfo.introduction}</Card.Text>
+                                {/* <Button onClick={followHandler} style={{ width: '80%', marginTop: "2vh" }} type="submit" variant="primary"><FontAwesomeIcon className="mx-2" icon={faUserFriends}></FontAwesomeIcon>{followed ? "Unfollow" : "Follow"}</Button> */}
+                                {/* <LinkContainer to="/messages" style={{ width: '80%', marginTop: "2vh" }}><Button onClick={submitHandler} type="submit" variant="primary"><FontAwesomeIcon className="mx-2" icon={faPaperPlane}></FontAwesomeIcon>Send a message</Button></LinkContainer> */}
+                            </Card>
+                            <Row style={{ display: 'flex', juctifyContent: 'right', alignItems: 'center', padding: "10vh" }}>
+                                <Form onSubmit={postHandler}>
+                                    <Form.Control type="" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}></Form.Control>
+                                    <Form.Control onChange={(e) => setContents(e.target.value)} value={contents} as="textarea" placeholder="Write a new post" />
+                                    <Button type="submit" className="my-4" variant="success">Publish</Button>
+                                </Form>
+                                <Card.Body>
+                                    {
+                                        posts.map((post) => (
+                                            <Card key={post._id}>
+                                                <Card.Body>
+                                                    {/* <LinkContainer to={`/blogs/${userInfo._id}`}></LinkContainer> */}
+                                                    <Card.Title>{post.title}</Card.Title>
+                                                    <Card.Text>{post.contents}</Card.Text>
+                                                    <Button>Comment</Button>
+                                                </Card.Body>
+                                            </Card>
+                                        ))
+                                    }
+                                </Card.Body>
+                            </Row>
+                        </Row>)
                 }
             </Row>
-        </Container>
+        </Container >
     )
 }
 

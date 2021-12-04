@@ -41,7 +41,18 @@ const getUserProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-        res.json(user)
+        res.json({
+            _id: user._id,
+            username: user.username,
+            password: user.password,
+            knownAs: user.knownAs,
+            dateOfBirth: user.dateOfBirth,
+            gender: user.gender,
+            country: user.country,
+            city: user.city,
+            introduction: user.introduction,
+            token: generateToken(user._id),
+        })
     } else {
         res.status(404).json({ message: 'User not found' });
     }
@@ -53,10 +64,14 @@ const getCurrentUserProfile = asyncHandler(async (req, res) => {
     if (user) {
         res.json({
             _id: user._id,
-            knownAs: user.knownAs,
             username: user.username,
-            nativeLanguage: user.nativeLanguage,
-            isLearning: user.isLearning,
+            password: user.password,
+            knownAs: user.knownAs,
+            dateOfBirth: user.dateOfBirth,
+            gender: user.gender,
+            country: user.country,
+            city: user.city,
+            introduction: user.introduction,
             token: generateToken(user._id),
         });
     } else {
@@ -102,10 +117,14 @@ const authUser = asyncHandler(async (req, res) => {
     else if (user && (await user.matchPassword(password))) {
         res.json({
             _id: user._id,
-            knownAs: user.knownAs,
             username: user.username,
-            isLearning: user.isLearning,
-            isAdmin: user.isAdmin,
+            password: user.password,
+            knownAs: user.knownAs,
+            dateOfBirth: user.dateOfBirth,
+            gender: user.gender,
+            country: user.country,
+            city: user.city,
+            introduction: user.introduction,
             token: generateToken(user._id),
         });
     }
@@ -153,31 +172,31 @@ const deleteCurrentUserAccount = asyncHandler(async (req, res) => {
     };
 })
 
-const followUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    const currentUser = await User.findById(req.body.userId);
+// const followUser = asyncHandler(async (req, res) => {
+//     const user = await User.findById(req.params.id);
+//     const currentUser = await User.findById(req.body.userId);
 
-    if(!user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $push: { followers: req.body.userId } });
-        await currentUser.updateOne({ $push: { followings: req.params.id } });
-        res.status(200).json("Now you're following this user")
-    } else {
-        res.status(403).json("You already follow this user")
-    }
-})
+//     if(!user.followers.includes(req.body.userId)) {
+//         await user.updateOne({ $push: { followers: req.body.userId } });
+//         await currentUser.updateOne({ $push: { followings: req.params.id } });
+//         res.status(200).json("Now you're following this user")
+//     } else {
+//         res.status(403).json("You already follow this user")
+//     }
+// })
 
-const unfollowUser = asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    const currentUser = await User.findById(req.body.userId);
+// const unfollowUser = asyncHandler(async (req, res) => {
+//     const user = await User.findById(req.params.id);
+//     const currentUser = await User.findById(req.body.userId);
 
-    if(user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $pull: { followers: req.body.userId } });
-        await currentUser.updateOne({ $pull: { followings: req.params.id } });
-        res.status(200).json("Now you're not following this user")
-    } else {
-        res.status(403).json("You don't follow this user")
-    }
-})
+//     if(user.followers.includes(req.body.userId)) {
+//         await user.updateOne({ $pull: { followers: req.body.userId } });
+//         await currentUser.updateOne({ $pull: { followings: req.params.id } });
+//         res.status(200).json("Now you're not following this user")
+//     } else {
+//         res.status(403).json("You don't follow this user")
+//     }
+// })
 
 export {
     getUsers,
@@ -187,6 +206,6 @@ export {
     registerUser,
     updateCurrentUserProfile,
     deleteCurrentUserAccount,
-    followUser,
-    unfollowUser,
+    // followUser,
+    // unfollowUser,
 }

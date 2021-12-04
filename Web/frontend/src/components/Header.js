@@ -35,9 +35,6 @@ const Header = () => {
                                         <LinkContainer to="/messages">
                                             <Nav.Link>Messages</Nav.Link>
                                         </LinkContainer>
-                                        <LinkContainer to={`/blogs/${userInfo.isLearning}`}>
-                                            <Nav.Link>Blog</Nav.Link>
-                                        </LinkContainer>
                                     </Nav>
                                 ) : (<div>
                                 </div>)}
@@ -49,7 +46,7 @@ const Header = () => {
                             <Nav>
                                 {userInfo ? (
                                     <NavDropdown title={"Hello, " + userInfo.knownAs.charAt(0).toUpperCase() + userInfo.knownAs.slice(1)} id='name'>
-                                        <LinkContainer to="/profile"><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
+                                        <LinkContainer to="/users/profile"><NavDropdown.Item>Profile</NavDropdown.Item></LinkContainer>
                                         <NavDropdown.Divider />
                                         <LinkContainer to="/profile/edit"><NavDropdown.Item>Edit profile</NavDropdown.Item></LinkContainer>
                                         <NavDropdown.Divider />
@@ -62,13 +59,8 @@ const Header = () => {
                                 {userInfo && userInfo.isAdmin && (
                                     <NavDropdown title={"Admin "} id='adminmenu'>
                                         <LinkContainer to="/admin/users"><NavDropdown.Item>Users</NavDropdown.Item></LinkContainer>
-                                        {/* <NavDropdown.Divider /> */}
-                                        {/* <LinkContainer to="/profile/edit"><NavDropdown.Item>Edit profile</NavDropdown.Item></LinkContainer>
-                                    <NavDropdown.Divider /> */}
-                                        {/* <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>  */}
                                     </NavDropdown>
                                 )}
-                                {/* </NavDropdown> */}
                             </Nav>
                         </Col>
                     </Row>

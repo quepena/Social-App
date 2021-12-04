@@ -1,11 +1,12 @@
 .chatMessageOwn {
-    width: 80%;
-    right: 0 auto;
-    color: orange;
+    width: 50vh;
+    left: 70%;
+    text-align: right;
 }
 
 .chatMessage {
-    color: violet;
+    width: 50vh;
+    right: 0 auto;
 }
 
 .chatBoxWrapper {
@@ -15,6 +16,6 @@
 }
 
 .chatBox {
-    height: 700px;
+    height: 600px;
     overflow-y: scroll;
 }
