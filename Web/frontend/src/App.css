@@ -1,11 +1,11 @@
 .chatMessageOwn {
-    width: 50vh;
+    width: 40vh;
     left: 70%;
     text-align: right;
 }
 
 .chatMessage {
-    width: 50vh;
+    width: 40vh;
     right: 0 auto;
 }
 

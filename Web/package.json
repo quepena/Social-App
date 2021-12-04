@@ -7,15 +7,18 @@
     "build": "cd frontend && npm run build",
     "install-frontend": "cd frontend && npm install",
     "install-socket": "cd socket && npm install",
-    "heroku-postbuild": "npm run install-frontend && npm run build && npm run install-socket && npm start",
-    "start": "NODE_ENV=production nodemon backend/server",
-    "test": "NODE_ENV=testdb mocha --require @babel/register --recursive **/test/**Test.js --timeout 10000"
+    "heroku-postbuild": "npm run install-frontend && npm run install-socket && npm run build",
+    "start": "node backend/server.js",
+    "test": "NODE_ENV=testdb mocha --require @babel/register --recursive **/test/**Test.js --timeout 10000",
+    "client": "cd frontend && npm start",
+    "dev": "concurrently -n 'server, frontend' \"nodemon backend/server\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^6.4.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",

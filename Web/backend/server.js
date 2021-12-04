@@ -20,6 +20,8 @@ if (process.env.NODE_ENV == 'production') {
     connectDB();
 }
 
+const PORT = process.env.PORT || 8080;
+
 const app = express();
 
 app.use(express.json());
@@ -37,9 +39,9 @@ app.use('/api/conversations', conversationRoutes);
 app.use('/api/blogs', blogRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('../frontend/build'))
+    app.use(express.static('frontend/build'))
 }
 
-app.listen(5000, console.log('Server'));
+app.listen(PORT, console.log('Server starting at '+PORT));
 
 export default app;
