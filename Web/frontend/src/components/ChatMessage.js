@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import { format } from 'timeago.js'
-import { Row, Col, Card, Container, Form, Button } from 'react-bootstrap'
-import { useDispatch, useSelector } from "react-redux";
+import { Card } from 'react-bootstrap'
+import { useSelector } from "react-redux";
 import axios from 'axios';
 
 const ChatMessage = ({ chatMessage, own, conversation }) => {

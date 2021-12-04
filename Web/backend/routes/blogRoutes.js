@@ -7,8 +7,4 @@ router.route('/').post(createPost)
 
 router.route('/:userId').get(timeline)
 
-// router.route('/:id').get(getPost).put(updatePost).delete(deletePost)
-
-// router.route('/:id/like').put(likePost)
-
 export default router;

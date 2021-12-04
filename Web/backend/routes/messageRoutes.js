@@ -4,6 +4,7 @@ import { getMessages, createMessage, getMessageByConversation } from '../control
 import { protect } from '../middleware/authMiddleware.js';
 
 router.route('/').post(protect, createMessage);
+
 router.route('/:conversation').get(protect, getMessageByConversation);
 
 export default router;

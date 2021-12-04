@@ -84,8 +84,7 @@ const updateCurrentUserProfile = asyncHandler(async (req, res) => {
 
     if (user) {
         user.username = req.body.username || user.username
-        user.nativeLanguage = req.body.nativeLanguage || user.nativeLanguage;
-        // user.isLearning = req.body.isLearning || user.isLearning;
+
         if (req.body.password) {
             user.password = req.body.password;
         }
@@ -172,32 +171,6 @@ const deleteCurrentUserAccount = asyncHandler(async (req, res) => {
     };
 })
 
-// const followUser = asyncHandler(async (req, res) => {
-//     const user = await User.findById(req.params.id);
-//     const currentUser = await User.findById(req.body.userId);
-
-//     if(!user.followers.includes(req.body.userId)) {
-//         await user.updateOne({ $push: { followers: req.body.userId } });
-//         await currentUser.updateOne({ $push: { followings: req.params.id } });
-//         res.status(200).json("Now you're following this user")
-//     } else {
-//         res.status(403).json("You already follow this user")
-//     }
-// })
-
-// const unfollowUser = asyncHandler(async (req, res) => {
-//     const user = await User.findById(req.params.id);
-//     const currentUser = await User.findById(req.body.userId);
-
-//     if(user.followers.includes(req.body.userId)) {
-//         await user.updateOne({ $pull: { followers: req.body.userId } });
-//         await currentUser.updateOne({ $pull: { followings: req.params.id } });
-//         res.status(200).json("Now you're not following this user")
-//     } else {
-//         res.status(403).json("You don't follow this user")
-//     }
-// })
-
 export {
     getUsers,
     getUserProfile,
@@ -206,6 +179,4 @@ export {
     registerUser,
     updateCurrentUserProfile,
     deleteCurrentUserAccount,
-    // followUser,
-    // unfollowUser,
 }

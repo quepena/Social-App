@@ -20,10 +20,6 @@ router.route('/users/profile').get(protect, getCurrentUserProfile).put(protect, 
 
 router.route('/users/:id').get(getUserProfile).delete(protect, deleteCurrentUserAccount);
 
-// router.route('/users/:id/follow').put(followUser);
-
-// router.route('/users/:id/unfollow').put(unfollowUser);
-
 router.route('/login').post(authUser);
 
 export default router;

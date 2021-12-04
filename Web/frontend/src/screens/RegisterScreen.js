@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
@@ -62,6 +62,9 @@ const RegisterScreen = ({ location, history }) => {
         }
         else if (!dateOfBirth) {
             setMessage('Choose your date of birth please!')
+        }
+        else if (username.length < 2 || username.length > 25) {
+            setMessage('Your username must be from 2 to 25 characters long');
         }
         else if (age < 13) {
             setMessage('You must be older than 13');

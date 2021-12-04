@@ -1,10 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Row, Col, Card, Container, Form, Button } from 'react-bootstrap'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUser } from '@fortawesome/free-solid-svg-icons';
-// import { messagesListByConversation, conversationsListByUser } from '../actions/messageActions';
-// import Loader from "../components/Loader";
-// import Message from "../components/Message";
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import ChatMessage from '../components/ChatMessage';
@@ -25,8 +20,6 @@ const MessageScreen = ({ history }) => {
     const [newMessage, setNewMessage] = useState('');
     const [arrivedMessage, setArrivedMessage] = useState(null);
 
-    const [friend, setFriend] = useState([]);
-
     const socket = useRef();
 
     const scrollRef = useRef();
@@ -43,7 +36,6 @@ const MessageScreen = ({ history }) => {
     useEffect(() => {
         if (userInfo) {
             socket.current = io("ws://127.0.0.1:8900"); //change it
-            // socket.current = io("ws://192.168.0.105:8900");
             socket.current.on("getMessage", data => {
                 setArrivedMessage({
                     sender: data.sender,
@@ -75,7 +67,6 @@ const MessageScreen = ({ history }) => {
 
     useEffect(() => {
         if (userInfo) {
-
             const fetchConversations = async (id) => {
                 try {
                     const res = await axios.get(`/api/conversations/${id}`, config)

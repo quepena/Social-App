@@ -4,6 +4,7 @@ import { getConversations, createConversation, getConversationByUser } from '../
 import { protect } from '../middleware/authMiddleware.js';
 
 router.route('/').get(protect, getConversations).post(protect, createConversation);
+
 router.route('/:userId').get(protect, getConversationByUser);
 
 export default router;

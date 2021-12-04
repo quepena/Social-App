@@ -19,8 +19,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         lowercase: true,
-        max: 40,
-        min: 5
     },
     dateOfBirth: {
         type: Date,
@@ -42,31 +40,12 @@ const userSchema = new mongoose.Schema({
     introduction: {
         type: String,
         required: true,
-        max: 50,
-        min: 5
     },
     created: {
         type: Date,
         required: true,
         default: Date.now
     },
-    isAdmin: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    photo: {
-        type: String,
-        required: false
-    },
-    // followers: {
-    //     type: Array,
-    //     default: []
-    // },
-    // followings: {
-    //     type: Array,
-    //     default: []
-    // }
 }, {
     timestamps: true
 })

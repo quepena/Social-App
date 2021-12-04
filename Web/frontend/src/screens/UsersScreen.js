@@ -38,8 +38,6 @@ const UsersScreen = ({ match, history }) => {
                 var Bday = +new Date(Bdate);
                 var calculatedAge = ((Date.now() - Bday) / (31557600000));
                 setAge(calculatedAge)
-                console.log(age);
-                console.log(calculatedAge);
             }
             calculateAge(userInfo.dateOfBirth)
         } else {
@@ -55,7 +53,7 @@ const UsersScreen = ({ match, history }) => {
             <Row style={{ display: 'flex', juctifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
                 {
                     users.map((user) => (
-                        userInfo && user._id === userInfo._id ? ((<div>
+                        userInfo && user._id === userInfo._id ? ((<div key={user._id}>
                         </div>)) :
                             (
                                 <LinkContainer to={`users/${user._id}`} key={user._id} style={{ width: '40vh', margin: '5vh' }}>

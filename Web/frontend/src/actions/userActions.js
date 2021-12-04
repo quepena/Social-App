@@ -18,10 +18,6 @@ import {
     USER_DELETE_PROFILE_FAIL,
 } from "../constants/userConstants"
 
-import {
-    ADMIN_USER_LIST_RESET
-} from "../constants/adminConstants"
-
 export const login = (username, password) => async (dispatch) => {
     try {
         dispatch({
@@ -53,7 +49,6 @@ export const login = (username, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo');
     dispatch({ type: USER_LOGOUT });
-    dispatch({ type: ADMIN_USER_LIST_RESET });
 }
 
 export const register = (username, password, knownAs, dateOfBirth, gender, country, city, introduction) => async (dispatch) => {

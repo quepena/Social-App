@@ -2,7 +2,6 @@ import React from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Container, Nav, NavDropdown, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Link, NavLink } from 'react-router-dom';
 import { logout } from '../actions/userActions';
 
 const Header = () => {
@@ -53,14 +52,9 @@ const Header = () => {
                                         <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                                     </NavDropdown>
                                 ) : (<LinkContainer to="/login">
-                                    <Nav.Link>Sign in</Nav.Link>
+                                    <Nav.Link>Login</Nav.Link>
                                 </LinkContainer>)
                                 }
-                                {userInfo && userInfo.isAdmin && (
-                                    <NavDropdown title={"Admin "} id='adminmenu'>
-                                        <LinkContainer to="/admin/users"><NavDropdown.Item>Users</NavDropdown.Item></LinkContainer>
-                                    </NavDropdown>
-                                )}
                             </Nav>
                         </Col>
                     </Row>

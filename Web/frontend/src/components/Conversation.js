@@ -1,21 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Row, Col, Card, Container, Form, Button } from 'react-bootstrap'
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react'
+import { Card } from 'react-bootstrap'
+import {  useSelector } from "react-redux";
 import axios from 'axios';
-import ChatMessage from '../components/ChatMessage';
-import { io } from 'socket.io-client'
 
 const Conversation = ({ conversation }) => {
     const [friend, setFriend] = useState([]);
 
     const userLogin = useSelector(state => state.userLogin);
     const { userInfo } = userLogin;
-
-    const config = {
-        headers: {
-            Authorization: `Bearer ${userInfo.token}`
-        }
-    }
 
     useEffect(() => {
         const friend = conversation.participants.find((m) => m !== userInfo._id)
