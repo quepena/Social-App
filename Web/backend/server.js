@@ -12,20 +12,17 @@ import connectDummyDB from './config/testdb.js';
 dotenv.config();
 
 console.log(process.env.NODE_ENV);
-if(process.env.NODE_ENV == 'testdb') {
+if (process.env.NODE_ENV == 'testdb') {
     connectDummyDB();
 }
-if(process.env.NODE_ENV == 'db') {
+// if (process.env.NODE_ENV == 'db') {
+if (process.env.NODE_ENV == 'production') {
     connectDB();
 }
 
 const app = express();
 
 app.use(express.json());
-
-app.get('/', (req, res) => {
-    res.json(users);
-})
 
 app.use('/api/users', userRoutes);
 
@@ -38,6 +35,10 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/conversations', conversationRoutes);
 
 app.use('/api/blogs', blogRoutes);
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('../frontend/build'))
+}
 
 app.listen(5000, console.log('Server'));
 
