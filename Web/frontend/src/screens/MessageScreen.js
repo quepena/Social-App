@@ -35,7 +35,7 @@ const MessageScreen = ({ history }) => {
 
     useEffect(() => {
         if (userInfo) {
-            socket.current = io("ws://127.0.0.1:8900"); //change it
+            socket.current = io("https://social-media-application-mern.herokuapp.com/");
             socket.current.on("getMessage", data => {
                 setArrivedMessage({
                     sender: data.sender,

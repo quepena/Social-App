@@ -36,13 +36,6 @@ const UserProfileScreen = ({ match, history }) => {
             }
             fetchConversations(userInfo._id);
 
-            const calculateAge = async (dateOfBirth) => {
-                var Bdate = dateOfBirth;
-                var Bday = +new Date(Bdate);
-                var calculatedAge = ((Date.now() - Bday) / (31557600000));
-                setAge(calculatedAge)
-            }
-            calculateAge(userInfo.dateOfBirth)
         } else {
             history.push('/login');
         }
@@ -147,7 +140,7 @@ const UserProfileScreen = ({ match, history }) => {
                             <Row>
                                 <Card style={{ display: 'flex', juctifyContent: 'left', alignItems: 'center', padding: "10vh" }}>
                                     <Card.Title><FontAwesomeIcon className="mx-2" icon={faUser}></FontAwesomeIcon><strong>{user.username}</strong></Card.Title>
-                                    <Card.Text>{user.knownAs + ", " + Math.floor(age) + ", " + user.gender}</Card.Text>
+                                    <Card.Text>{user.knownAs + ", " + user.gender}</Card.Text>
                                     <Card.Text>{user.city + ", " + user.country}</Card.Text>
                                     <Card.Text>{user.introduction}</Card.Text>
                                     <LinkContainer to="/messages" style={{ width: '80%', marginTop: "2vh" }}><Button onClick={submitHandler} type="submit" variant="primary"><FontAwesomeIcon className="mx-2" icon={faPaperPlane}></FontAwesomeIcon>Send a message</Button></LinkContainer>
@@ -158,7 +151,7 @@ const UserProfileScreen = ({ match, history }) => {
                             <Row>
                                 <Card style={{ display: 'flex', juctifyContent: 'left', alignItems: 'center', padding: "10vh" }}>
                                     <Card.Title><FontAwesomeIcon className="mx-2" icon={faUser}></FontAwesomeIcon><strong>{userInfo.username}</strong></Card.Title>
-                                    <Card.Text>{userInfo.knownAs + ", " + Math.floor(age) + ", " + userInfo.gender}</Card.Text>
+                                    <Card.Text>{userInfo.knownAs + ", " + userInfo.gender}</Card.Text>
                                     <Card.Text>{userInfo.city + ", " + userInfo.country}</Card.Text>
                                     <Card.Text>{userInfo.introduction}</Card.Text>
                                 </Card>

@@ -46,7 +46,6 @@ const getUserProfile = asyncHandler(async (req, res) => {
             username: user.username,
             password: user.password,
             knownAs: user.knownAs,
-            dateOfBirth: user.dateOfBirth,
             gender: user.gender,
             country: user.country,
             city: user.city,
@@ -67,7 +66,6 @@ const getCurrentUserProfile = asyncHandler(async (req, res) => {
             username: user.username,
             password: user.password,
             knownAs: user.knownAs,
-            dateOfBirth: user.dateOfBirth,
             gender: user.gender,
             country: user.country,
             city: user.city,
@@ -119,7 +117,6 @@ const authUser = asyncHandler(async (req, res) => {
             username: user.username,
             password: user.password,
             knownAs: user.knownAs,
-            dateOfBirth: user.dateOfBirth,
             gender: user.gender,
             country: user.country,
             city: user.city,
@@ -130,7 +127,7 @@ const authUser = asyncHandler(async (req, res) => {
 })
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { username, password, knownAs, nativeLanguage, isLearning, dateOfBirth, gender, country, city, introduction } = req.body;
+    const { username, password, knownAs, gender, country, city, introduction } = req.body;
 
     const userExists = await User.findOne({ username });
 
@@ -139,7 +136,7 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const user = await User.create({
-        username, password, knownAs, nativeLanguage, isLearning, dateOfBirth, gender, country, city, introduction
+        username, password, knownAs, gender, country, city, introduction
     })
 
     if (user) {
@@ -148,7 +145,6 @@ const registerUser = asyncHandler(async (req, res) => {
             username: user.username,
             password: user.password,
             knownAs: user.knownAs,
-            dateOfBirth: user.dateOfBirth,
             gender: user.gender,
             country: user.country,
             city: user.city,

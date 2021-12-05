@@ -32,14 +32,6 @@ const UsersScreen = ({ match, history }) => {
             }
 
             fetchUsers(keyword);
-
-            const calculateAge = async (dateOfBirth) => {           
-                var Bdate = dateOfBirth;
-                var Bday = +new Date(Bdate);
-                var calculatedAge = ((Date.now() - Bday) / (31557600000));
-                setAge(calculatedAge)
-            }
-            calculateAge(userInfo.dateOfBirth)
         } else {
             history.push('/login');
         }
@@ -56,11 +48,11 @@ const UsersScreen = ({ match, history }) => {
                         userInfo && user._id === userInfo._id ? ((<div key={user._id}>
                         </div>)) :
                             (
-                                <LinkContainer to={`users/${user._id}`} key={user._id} style={{ width: '40vh', margin: '5vh' }}>
+                                <LinkContainer to={`users/${user._id}`} key={user._id} style={{ width: '30vh', margin: '2vh' }}>
                                     <Card>
                                         <Card.Body>
                                             <Card.Title><FontAwesomeIcon className="mx-2" icon={faUser}></FontAwesomeIcon><strong>{user.username}</strong></Card.Title>
-                                            <Card.Text>{user.knownAs.charAt(0).toUpperCase() + user.knownAs.slice(1) + ", " + Math.floor(age)+ ", "+ user.gender}</Card.Text>
+                                            <Card.Text>{user.knownAs.charAt(0).toUpperCase() + user.knownAs.slice(1) + ", "+ user.gender}</Card.Text>
                                             <Card.Text>{user.city+", "+user.country}</Card.Text>
                                             <Card.Text>{user.introduction}</Card.Text>
                                             <Button>Go to profile</Button>

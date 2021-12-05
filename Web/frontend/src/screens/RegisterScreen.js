@@ -15,7 +15,6 @@ const RegisterScreen = ({ location, history }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState(null);
     const [knownAs, setKnownAs] = useState('');
-    const [dateOfBirth, setDateOfBirth] = useState('');
     const [gender, setGender] = useState('');
     const [countries, setCountry] = useState([]);
     const [cities, setCity] = useState([]);
@@ -45,29 +44,13 @@ const RegisterScreen = ({ location, history }) => {
 
     }, [history, userInfo, redirect])
 
-    const calculateAge = async (dateOfBirth) => {           
-        var Bdate = dateOfBirth;
-        var Bday = +new Date(Bdate);
-        var calculatedAge = ((Date.now() - Bday) / (31557600000));
-        setAge(calculatedAge)
-        console.log(age);
-        console.log(calculatedAge);
-    }
-
     const submitHandler = (e) => {
         e.preventDefault();
-        calculateAge(dateOfBirth);
         if (password !== confirmPassword) {
             setMessage('Passwords don\'t match');
         }
-        else if (!dateOfBirth) {
-            setMessage('Choose your date of birth please!')
-        }
         else if (username.length < 2 || username.length > 25) {
             setMessage('Your username must be from 2 to 25 characters long');
-        }
-        else if (age < 13) {
-            setMessage('You must be older than 13');
         }
         else if (!gender) {
             setMessage('Select your gender please!');
@@ -81,7 +64,7 @@ const RegisterScreen = ({ location, history }) => {
         else if (!introduction) {
             setMessage('Enter your introduction please!');
         } else {
-            dispatch(register(username, password, knownAs, dateOfBirth, gender, selectedCountry, selectedCity, introduction));
+            dispatch(register(username, password, knownAs, gender, selectedCountry, selectedCity, introduction));
         }
     }
 
@@ -114,10 +97,6 @@ const RegisterScreen = ({ location, history }) => {
                     <Form.Control type="" placeholder="Enter your name"
                         value={knownAs} onChange={(e) => setKnownAs(e.target.value)}>
                     </Form.Control>
-                </Form.Group>
-                <Form.Group controlId="dateOfBirth">
-                    <Form.Label>Date of birth</Form.Label>
-                    <Form.Control type="date" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} />
                 </Form.Group>
                 <Form.Group controlId="gender">
                     <Form.Label>Gender</Form.Label>
