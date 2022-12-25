@@ -5,8 +5,6 @@
   "type": "module",
   "scripts": {
     "build": "cd frontend && npm run build",
-    "install-frontend": "cd frontend && npm install",
-    "heroku-postbuild": "npm run install-frontend &&  npm run build",
     "start": "node backend/server.js",
     "test": "NODE_ENV=testdb mocha --require @babel/register --recursive **/test/**Test.js --timeout 10000",
     "client": "cd frontend && npm start",
