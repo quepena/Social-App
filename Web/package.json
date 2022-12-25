@@ -4,7 +4,6 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build": "cd frontend && npm run build",
     "start": "node backend/server.js",
     "test": "NODE_ENV=testdb mocha --require @babel/register --recursive **/test/**Test.js --timeout 10000",
     "client": "cd frontend && npm start",
